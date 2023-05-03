@@ -9,4 +9,6 @@ Import City Database from Geonames into Postgresql/PostGIS
 
 4. Add DATABASE_URI
 
-5. python main.py
+5. Download [country code csv](https://raw.githubusercontent.com/lukes/ISO-3166-Countries-with-Regional-Codes/master/all/all.csv) for country code/country name mapping 
+
+6. python main.py

@@ -162,3 +162,4 @@ cython_debug/
 # Project specific
 cities15000.txt
 auth.json
+all.csv

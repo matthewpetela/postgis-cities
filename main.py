@@ -21,6 +21,7 @@ class Geoname(Base):
     feature_class = Column(String(1))
     feature_code = Column(String(10))
     country_code = Column(String(2))
+    country_name = Column(String(200))
     cc2 = Column(String(200))
     admin1_code = Column(String(20))
     admin2_code = Column(String(80))
@@ -36,6 +37,16 @@ class Geoname(Base):
 with open("auth.json") as f:
     auth = json.load(f)
     DATABASE_URI = auth["DATABASE_URI"]
+
+country_code_to_name = {}
+
+# Replace 'all.csv' with the path to your country codes CSV file
+with open('all.csv', 'r', encoding='utf-8') as csv_file:
+    csv_reader = csv.reader(csv_file)
+    next(csv_reader)  # Skip the header row
+    for row in csv_reader:
+        country_code_to_name[row[1]] = row[0]
+
 
 engine = create_engine(DATABASE_URI)
 Base.metadata.create_all(engine)
@@ -58,6 +69,7 @@ with open('cities15000.txt', 'r', encoding='utf-8') as tsv_file:
             feature_class=row[6],
             feature_code=row[7],
             country_code=row[8],
+            country_name=country_code_to_name.get(row[8], ''),
             cc2=row[9],
             admin1_code=row[10],
             admin2_code=row[11],
